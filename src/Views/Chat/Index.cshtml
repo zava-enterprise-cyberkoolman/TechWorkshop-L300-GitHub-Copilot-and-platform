@@ -1,0 +1,50 @@
+@model ZavaStorefront.Models.ChatViewModel
+@{
+    ViewData["Title"] = "Chat with Phi4";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-3">Chat with Phi4</h1>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.ErrorMessage
+        </div>
+    }
+
+    <div class="card mb-3">
+        <div class="card-body p-0">
+            <textarea id="chatHistory" class="form-control border-0" rows="16" readonly
+                      style="resize: none; font-family: monospace; background-color: #f8f9fa;">@{
+                foreach (var msg in Model.History)
+                {
+                    var label = msg.Role == "user" ? "You" : "Phi4";
+                    @($"[{label}]: {msg.Content}{Environment.NewLine}{Environment.NewLine}")
+                }
+            }</textarea>
+        </div>
+    </div>
+
+    <form asp-controller="Chat" asp-action="Send" method="post" class="mb-2">
+        <div class="input-group">
+            <input type="text" name="userInput" class="form-control" placeholder="Type your message..." autofocus autocomplete="off" />
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send"></i> Send
+            </button>
+        </div>
+    </form>
+
+    <form asp-controller="Chat" asp-action="Clear" method="post">
+        <button type="submit" class="btn btn-outline-secondary btn-sm">Clear conversation</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            var ta = document.getElementById('chatHistory');
+            if (ta) ta.scrollTop = ta.scrollHeight;
+        })();
+    </script>
+}
