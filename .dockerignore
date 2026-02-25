@@ -1,0 +1,25 @@
+# Build outputs
+bin/
+obj/
+
+# VS files
+.vs/
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Runtime data
+local.settings.json
+
+# NuGet packages
+packages/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
